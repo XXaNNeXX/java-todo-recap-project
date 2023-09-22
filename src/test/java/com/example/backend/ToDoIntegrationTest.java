@@ -39,5 +39,19 @@ public class ToDoIntegrationTest {
                         """));
     }
 
+    @Test
+    @DirtiesContext
+    void getToDoByIdTest() throws Exception {
+        toDoRepo.save(new ToDo("1", "gassi gehen", "OPEN"));
 
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                            "id": "1",
+                            "description": "gassi gehen",
+                            "status": "OPEN"
+                        }
+                        """));
+    }
 }
